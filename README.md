@@ -114,17 +114,13 @@ Image fields will have the image URL available under the `field.asset.url` key, 
 
 ```js
 import React from 'react'
-import {getGatsbyImageData} from 'gatsby-source-sanity'
 import {GatsbyImage} from 'gatsby-plugin-image'
 
-const sanityConfig = {projectId: 'abc123', dataset: 'blog'}
-
 const Person = ({data}) => {
-  const imageData = getGatsbyImageData(data.sanityPerson.profileImage.asset, {maxWidth: 700}, sanityConfig)
   return (
     <article>
       <h2>{data.sanityPerson.name}</h2>
-      <GatsbyImage image={imageData}/>
+      <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData}/>
     </article>
   )
 }
@@ -136,7 +132,9 @@ export const query = graphql`
     sanityPerson {
       name
       profileImage {
-        asset
+        asset {
+           gatsbyImageData
+        }
       }
     }
   }
